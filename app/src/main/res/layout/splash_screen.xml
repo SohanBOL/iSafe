@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:background="@color/dark"
     android:orientation="vertical"
+    android:background="@color/dark"
+    android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="match_parent">
     <TextView
-
         android:textStyle="bold"
         android:layout_margin="16dp"
         android:textSize="24sp"
         android:gravity="center"
-        android:text="Contact Person"
+        android:text="Accident Reported! \n A Nobel Work Has Been Done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <TextView
-        android:textStyle="bold"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:id="@+id/displayMobileTextView"
-        android:layout_height="wrap_content" />
 
-
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="96dp"
+        android:src="@drawable/clapping"
+        android:layout_height="96dp" />
 </LinearLayout>

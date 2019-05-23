@@ -7,6 +7,9 @@ public class ContactDetails {
         return name;
     }
 
+    public ContactDetails() {
+    }
+
     public void setName(String name) {
         this.name = name;
     }

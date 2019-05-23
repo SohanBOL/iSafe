@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:layout_margin="32dp"
+    android:gravity="center"
+    android:background="@color/dark"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,57 +10,52 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
         android:textSize="24sp"
         android:text="Name :"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
     <EditText
-
-        android:hint="name"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:id="@+id/nameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:textSize="24sp"
-        android:text="Moble :"
+        android:hint="name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <TextView
+        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:textSize="24sp"
+        android:text="Moblie :"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
     <EditText
-        android:inputType="phone"
-        android:hint="Phone"
+        android:id="@+id/phonNoEditText"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:id="@+id/phonNoEditText"
+        android:inputType="phone"
+        android:textSize="24sp"
+        android:hint="Mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.CardView
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="16dp"
-        app:cardBackgroundColor="@color/dark"
-        style="@style/CardView"
-        app:cardElevation="8dp">
 
-        <Button
-            android:id="@+id/addContactButton"
-            android:textAllCaps="false"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Add Contact"
-            android:textColor="@color/white"
-            android:textSize="24sp"/>
-    </android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/addContactButton"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:layout_margin="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Add Contact"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

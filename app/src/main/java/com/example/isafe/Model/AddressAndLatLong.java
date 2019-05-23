@@ -8,6 +8,9 @@ public class AddressAndLatLong {
         return address;
     }
 
+    public AddressAndLatLong() {
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }

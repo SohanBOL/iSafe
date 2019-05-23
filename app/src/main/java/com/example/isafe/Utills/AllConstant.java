@@ -5,4 +5,6 @@ public class AllConstant {
     public static int CLICK_PHOTOS_FRAGMENT=2;
     public static int MAP_FRAGMENT=3;
     public static int CONTACT_DETAILS=4;
+    public static int ALL_ACCIDENT=5;
+    public static int SPLASH_SCREEN=6;
 }

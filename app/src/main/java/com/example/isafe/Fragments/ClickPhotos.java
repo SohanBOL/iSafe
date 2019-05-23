@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.isafe.Activities.DrawerActivity;
 import com.example.isafe.Model.AccidentReport;
@@ -26,6 +27,7 @@ import com.example.isafe.Utills.MyApplication;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ClickPhotos extends Fragment implements View.OnClickListener{
@@ -158,7 +160,11 @@ File mPhotoFile;
 
         if(photoURI1!=null && photoURI3!=null && photoURI2!=null){
             // TODO: please complete this
-            Images images=new Images(photoURI1.toString(),photoURI2.toString(),photoURI3.toString());
+            ArrayList<String> imagesArrayList=new ArrayList<>();
+            imagesArrayList.add(photoURI1.toString());
+            imagesArrayList.add(photoURI2.toString());
+            imagesArrayList.add(photoURI3.toString());
+            Images images=new Images(imagesArrayList);
            if(MyApplication.accidentReport!=null) {
                MyApplication.accidentReport.setImages(images);
            }
@@ -169,6 +175,9 @@ File mPhotoFile;
            }
             Intent intent=new Intent(context, DrawerActivity.class);
             startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "Please choose three photos first!", Toast.LENGTH_SHORT).show();
         }
     }
 

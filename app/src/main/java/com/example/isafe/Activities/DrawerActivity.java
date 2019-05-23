@@ -1,9 +1,14 @@
 package com.example.isafe.Activities;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -18,16 +23,61 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.isafe.Fragments.AddAccident;
+import com.example.isafe.Fragments.AllAccident;
 import com.example.isafe.Fragments.ClickPhotos;
 import com.example.isafe.Fragments.ContactFragment;
 import com.example.isafe.Fragments.MapFragment;
+import com.example.isafe.Fragments.SplashScreen;
 import com.example.isafe.Model.Images;
 import com.example.isafe.R;
+import com.example.isafe.Utills.AllConstant;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout frameLayout;
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if
+                (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                }
+
+                else {
+
+                    showAlertMessage();
+
+                }
+
+                return;
+            }
+        }
+    }
+    private void showAlertMessage() {
+
+        android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(this);
+        builder.setMessage("Please allow the permission to use this app")
+                .setIcon(R.drawable.ic_menu_camera)
+                .setTitle("Permission")
+                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        askForPermissions();
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .show();
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +97,51 @@ public class DrawerActivity extends AppCompatActivity
 
         frameLayout=findViewById(R.id.frameLayout);
         Intent intent=getIntent();
-        findFragment(intent);
+        if(!hasAllPermissions()) {
+            askForPermissions();
+        }
 
+        else {
+
+            int fragment = intent.getIntExtra("FRAGMENT", 1);
+            findFragment(fragment);
+        }
     }
 
-    private void findFragment(Intent intent) {
 
-        int fragment=intent.getIntExtra("FRAGMENT",1);
+    private void askForPermissions()
+    {
+        String permissions[]={
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        };
+        if(Build.VERSION.SDK_INT>=23)
+            requestPermissions(permissions,1);
+    }
+
+
+    private boolean hasAllPermissions()
+    {
+        if(Build.VERSION.SDK_INT>=23)
+            return ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+                    &&ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+                    &&ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.ACCESS_NETWORK_STATE)==PackageManager.PERMISSION_GRANTED
+                    &&ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED
+                    &&ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
+                    &&ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.INTERNET)==PackageManager.PERMISSION_GRANTED
+                    &&ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED;
+
+
+        return true;
+    }
+
+    private void findFragment(int fragment) {
+
         switch (fragment){
             case 1:
                 openFragment(new AddAccident());
@@ -66,6 +154,12 @@ public class DrawerActivity extends AppCompatActivity
                 break;
             case 4:
                 openFragment(new ContactFragment());
+                break;
+            case 5:
+                openFragment(new AllAccident());
+                break;
+            case 6:
+                openFragment(new SplashScreen());
                 break;
         }
     }
@@ -115,18 +209,12 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.all_Accident) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            findFragment(AllConstant.ALL_ACCIDENT);
+        } else if (id == R.id.add_accident) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            findFragment(AllConstant.ADD_ACCIDENT);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.isafe.Activities.DrawerActivity;
 import com.example.isafe.Model.AccidentReport;
@@ -23,7 +25,10 @@ import com.example.isafe.Model.ContactDetails;
 import com.example.isafe.Model.Images;
 import com.example.isafe.R;
 import com.example.isafe.Utills.AllConstant;
+import com.example.isafe.Utills.DatabaseHelper;
 import com.example.isafe.Utills.MyApplication;
+
+import java.io.IOException;
 
 import static com.example.isafe.R.id.displayContact;
 
@@ -33,6 +38,7 @@ public class AddAccident extends Fragment implements View.OnClickListener{
     private TextView locationTextView,contactTextView;
     private View displayImageView,displayLocationView,displayContactDetailsView;
     private Button clickPhotoCardView,attachLocationCardView,contactPersonCardView,reportCardView;
+    private ProgressBar progressBar;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,6 +61,8 @@ public class AddAccident extends Fragment implements View.OnClickListener{
         attachLocationCardView.setOnClickListener(this);
         contactPersonCardView.setOnClickListener(this);
         reportCardView.setOnClickListener(this);
+        progressBar=view.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
 
         checkAccident();
 
@@ -76,9 +84,9 @@ public class AddAccident extends Fragment implements View.OnClickListener{
         }
         else{
             displayImageView.setVisibility(View.VISIBLE);
-            imageView1.setImageURI(Uri.parse(images.getImageUrl1()));
-            imageView2.setImageURI(Uri.parse(images.getImageUrl2()));
-            imageView3.setImageURI(Uri.parse(images.getImageUrl3()));
+            imageView1.setImageURI(Uri.parse(images.getImageUrls().get(0)));
+            imageView2.setImageURI(Uri.parse(images.getImageUrls().get(1)));
+            imageView3.setImageURI(Uri.parse(images.getImageUrls().get(2)));
             clickPhotoCardView.setVisibility(View.GONE);
 
         }
@@ -124,14 +132,44 @@ public class AddAccident extends Fragment implements View.OnClickListener{
                 openFragment(AllConstant.CONTACT_DETAILS);
                 break;
             case R.id.reportcardView:
-                uploadData();
+                if(checkAllSelected()) {
+                    try {
+                        uploadData();
+                       } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    Toast.makeText(context, "Please choose all the fields first!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
         }
     }
 
-    private void uploadData() {
+    private boolean checkAllSelected() {
 
+        if(MyApplication.accidentReport!=null){
+            Images images=MyApplication.accidentReport.getImages();
+            ContactDetails contactDetails=MyApplication.accidentReport.getContactDetails();
+            AddressAndLatLong addressAndLatLong=MyApplication.accidentReport.getAddressAndLatLong();
+            if(images!=null&&contactDetails!=null&&addressAndLatLong!=null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    private void uploadData() throws IOException {
+        progressBar.setVisibility(View.VISIBLE);
+        DatabaseHelper databaseHelper=new DatabaseHelper(context);
+        databaseHelper.uploadMultipleImages(MyApplication.accidentReport.getImages().getImageUrls());
         //TODO: upload data on firebase
     }
 

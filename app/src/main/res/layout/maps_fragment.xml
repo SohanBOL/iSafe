@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/dark"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,23 +8,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-        <TextView
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:layout_margin="32dp"
-            android:text="Click Photo"
-            android:textColor="@color/white"
-            android:textSize="32sp"/>
+    <TextView
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_add_location_black_24dp"
+        android:text="Add Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <EditText
-        android:layout_margin="32dp"
-        android:layout_weight="1"
+
         android:id="@+id/locationEditText"
+        android:gravity="center"
+        android:layout_margin="16dp"
+        android:textSize="24sp"
+        android:drawableRight="@drawable/ic_edit_black_24dp"
+        android:layout_gravity="center"        android:hint="Add Location"
         android:layout_width="match_parent"
-        android:text="location"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -34,13 +39,16 @@
         android:layout_height="0dp"
         android:layout_weight="6"
         tools:context=".MapsActivity" />
-    <Button
-        android:layout_margin="32dp"
-        android:layout_weight="1"
-        android:id="@+id/attachLocationButton"
-        android:layout_width="match_parent"
-        android:text="location"
-        android:layout_height="0dp" />
 
+    <Button
+
+        android:id="@+id/attachLocationButton"        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:layout_margin="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Add Location"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
 
